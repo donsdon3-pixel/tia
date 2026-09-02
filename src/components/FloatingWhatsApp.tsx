@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
-import { openWhatsApp, WHATSAPP_NUMBER, PA_NAME } from '@/lib/whatsapp';
+import React, { useState } from "react";
+import { MessageSquare, X, Send } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 export const FloatingWhatsApp: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,53 +16,58 @@ export const FloatingWhatsApp: React.FC = () => {
               <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-xs font-bold text-white">P.A. Laila (Official Desk)</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-white">
+            <button type="button" aria-label="Close WhatsApp fast menu" onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white p-1">
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <p className="text-xs text-slate-300">
-            Welcome to TIA! How can we assist you today regarding our AI Courses, Business Solutions, or Job Applications?
+          <p className="text-xs text-slate-300 leading-relaxed">
+            Welcome to TIA! How can we assist you today regarding our AI & Tech Courses, Business Solutions, or Job Applications?
           </p>
 
           <div className="space-y-1.5">
             <button
+              type="button"
               onClick={() => {
                 openWhatsApp("Hello P.A. Laila, I am interested in applying for a job / internship at TIA.");
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-amber-300 border border-slate-800 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-amber-300 border border-slate-800 transition-colors font-medium"
             >
               💼 Apply for Job / Internship
             </button>
 
             <button
+              type="button"
               onClick={() => {
-                openWhatsApp("Hello P.A. Laila, please share course syllabus and admission details.");
+                openWhatsApp("Hello P.A. Laila, please share course syllabus and admission details for AI, Cyber & Cloud courses.");
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-cyan-300 border border-slate-800 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-cyan-300 border border-slate-800 transition-colors font-medium"
             >
-              🎓 Inquire about AI & CAD Courses
+              🎓 Inquire about AI, Cyber & Cloud Courses
             </button>
 
             <button
+              type="button"
               onClick={() => {
-                openWhatsApp("Hello P.A. Laila, I would like to get a quote for a Business Solution (With/Without AI).");
+                openWhatsApp("Hello P.A. Laila, I would like to get a quote for a Business Solution (With / Without AI).");
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-emerald-300 border border-slate-800 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-emerald-300 border border-slate-800 transition-colors font-medium"
             >
               ⚡ Request Business Solution Quote
             </button>
           </div>
 
           <button
+            type="button"
             onClick={() => {
               openWhatsApp("Hello P.A. Laila, I would like to chat with TIA.");
               setIsOpen(false);
             }}
-            className="w-full py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs hover:brightness-110 flex items-center justify-center gap-1.5"
+            aria-label="Open full WhatsApp chat with P.A. Laila"
+            className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs hover:brightness-110 flex items-center justify-center gap-1.5 shadow-md"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Open WhatsApp Chat (+91 7386157041)</span>
@@ -71,9 +76,10 @@ export const FloatingWhatsApp: React.FC = () => {
       )}
 
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle WhatsApp chat with P.A. Laila"
         className="relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 shadow-2xl shadow-emerald-500/40 hover:scale-105 active:scale-95 transition-all"
-        title="Chat on WhatsApp with P.A. Laila (+91 7386157041)"
       >
         <MessageSquare className="w-7 h-7" />
         <span className="absolute -top-1 -right-1 flex h-4 w-4">

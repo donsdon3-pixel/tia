@@ -1,55 +1,57 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Sparkles, Building2, Bot, Settings2, Send, CheckCircle2 } from 'lucide-react';
-import { submitBusinessInquiry, BusinessInquiryData } from '@/lib/supabaseClient';
-import { generateBusinessInquiryWhatsAppMessage, openWhatsApp } from '@/lib/whatsapp';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { X, Building2, Bot, Settings2, Send, CheckCircle2 } from "lucide-react";
+import { submitBusinessInquiry, BusinessInquiryData } from "@/lib/supabaseClient";
+import { generateBusinessInquiryWhatsAppMessage, openWhatsApp } from "@/lib/whatsapp";
 
 interface InstantQuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   preselectedService?: string;
-  initialCategory?: 'with_ai' | 'without_ai';
+  initialCategory?: "with_ai" | "without_ai";
 }
 
 export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
   isOpen,
   onClose,
-  preselectedService = 'Autonomous AI Agents & Workflow Automation',
-  initialCategory = 'with_ai',
+  preselectedService = "Autonomous AI Agents & Workflow Automation",
+  initialCategory = "with_ai",
 }) => {
   const [formData, setFormData] = useState<BusinessInquiryData>({
-    clientName: '',
-    companyName: '',
-    phone: '',
-    email: '',
+    clientName: "",
+    companyName: "",
+    phone: "",
+    email: "",
     solutionCategory: initialCategory,
     serviceType: preselectedService,
-    projectScope: '',
-    estimatedTimeline: '2 - 4 Weeks',
+    projectScope: "",
+    estimatedTimeline: "2 - 4 Weeks",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const aiServices = [
-    'Autonomous AI Agents & Workflow Automation',
-    'Custom Enterprise LLM & GPT Solutions',
-    'Predictive Analytics & AI Decision Systems',
-    'Computer Vision & Conversational Voice AI',
-    'Enterprise AI Strategy & Staff Training',
+    "Autonomous AI Agents & Workflow Automation",
+    "Custom Enterprise LLM & GPT Solutions",
+    "Predictive Analytics & AI Decision Systems",
+    "Computer Vision & Conversational Voice AI",
+    "Cybersecurity & AI Threat Intelligence",
+    "Cloud Computing & DevOps Architecture",
+    "Enterprise AI Strategy & Staff Training",
   ];
 
   const nonAiServices = [
-    'Industrial CAD 3D Design & Mechanical Modeling',
-    'Mechatronics & Embedded Automation Systems',
-    'Enterprise Web, Cloud & Database Architectures',
-    'Process Optimization & Digital Transformation',
-    'Legacy Systems Modernization',
+    "Industrial CAD 3D Design & Mechanical Modeling",
+    "Mechatronics & Embedded Automation Systems",
+    "Enterprise Web, Cloud & Database Architectures",
+    "Process Optimization & Digital Transformation",
+    "Legacy Systems Modernization",
   ];
 
-  const currentServices = formData.solutionCategory === 'with_ai' ? aiServices : nonAiServices;
+  const currentSuggestions = formData.solutionCategory === "with_ai" ? aiServices : nonAiServices;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,13 +62,13 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
       setSubmitted(true);
 
       const msg = generateBusinessInquiryWhatsAppMessage({
-        clientName: formData.clientName,
+        clientName: formData.clientName || "Prospective Client",
         companyName: formData.companyName,
-        phone: formData.phone,
+        phone: formData.phone || "Contact via WhatsApp",
         email: formData.email,
         solutionCategory: formData.solutionCategory,
-        serviceType: formData.serviceType,
-        projectScope: formData.projectScope,
+        serviceType: formData.serviceType || "Custom Business Solution",
+        projectScope: formData.projectScope || "General requirement inquiry",
         budgetOrTimeline: formData.estimatedTimeline,
       });
 
@@ -90,8 +92,10 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
         className="relative w-full max-w-2xl bg-[#070D1A] border border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl my-8"
       >
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          aria-label="Close quote modal"
+          className="absolute top-5 right-5 p-2 rounded-full bg-slate-800 text-slate-300 hover:text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -102,7 +106,7 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-white">Request Business Solution Quote</h3>
-            <p className="text-xs text-slate-400">With AI or Without AI • Custom Engineered by TIA</p>
+            <p className="text-xs text-slate-300">With AI or Without AI • Custom Engineered by TIA</p>
           </div>
         </div>
 
@@ -117,8 +121,9 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
             </p>
             <div className="pt-4">
               <button
+                type="button"
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-xl bg-amber-400 text-black font-bold text-xs"
+                className="px-6 py-2.5 rounded-xl bg-amber-400 text-black font-bold text-xs shadow-md"
               >
                 Close
               </button>
@@ -128,15 +133,15 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
           <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
             {/* Category Toggle */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-2">Solution Category</label>
+              <label className="block text-xs font-semibold text-slate-200 mb-2">Solution Category</label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, solutionCategory: 'with_ai', serviceType: aiServices[0] })}
+                  onClick={() => setFormData({ ...formData, solutionCategory: "with_ai", serviceType: aiServices[0] })}
                   className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
-                    formData.solutionCategory === 'with_ai'
-                      ? 'bg-cyan-500/20 border-cyan-400 text-cyan-200 shadow-md shadow-cyan-500/20'
-                      : 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white'
+                    formData.solutionCategory === "with_ai"
+                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-200 shadow-md shadow-cyan-500/20"
+                      : "bg-slate-900 border-slate-700 text-slate-300 hover:text-white"
                   }`}
                 >
                   <Bot className="w-4 h-4" />
@@ -145,11 +150,11 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
 
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, solutionCategory: 'without_ai', serviceType: nonAiServices[0] })}
+                  onClick={() => setFormData({ ...formData, solutionCategory: "without_ai", serviceType: nonAiServices[0] })}
                   className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
-                    formData.solutionCategory === 'without_ai'
-                      ? 'bg-amber-500/20 border-amber-400 text-amber-200 shadow-md shadow-amber-500/20'
-                      : 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white'
+                    formData.solutionCategory === "without_ai"
+                      ? "bg-amber-500/20 border-amber-400 text-amber-200 shadow-md shadow-amber-500/20"
+                      : "bg-slate-900 border-slate-700 text-slate-300 hover:text-white"
                   }`}
                 >
                   <Settings2 className="w-4 h-4" />
@@ -160,23 +165,24 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Contact Person Name *</label>
+                <label htmlFor="quote-client-name" className="block text-xs font-medium text-slate-200 mb-1">Contact Person Name</label>
                 <input
+                  id="quote-client-name"
                   type="text"
-                  required
                   value={formData.clientName}
                   onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="Your Name"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Company / Business Name</label>
+                <label htmlFor="quote-company-name" className="block text-xs font-medium text-slate-200 mb-1">Company / Business Name</label>
                 <input
+                  id="quote-company-name"
                   type="text"
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="Company (optional)"
                 />
               </div>
@@ -184,39 +190,44 @@ export const InstantQuoteModal: React.FC<InstantQuoteModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">WhatsApp Number *</label>
+                <label htmlFor="quote-phone" className="block text-xs font-medium text-slate-200 mb-1">WhatsApp Number</label>
                 <input
+                  id="quote-phone"
                   type="tel"
-                  required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="+91 9876543210"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Specific Service *</label>
-                <select
+                <label htmlFor="quote-service-input" className="block text-xs font-medium text-slate-200 mb-1">Specific Service (Select or Type Custom)</label>
+                <input
+                  id="quote-service-input"
+                  list="services-list"
+                  type="text"
                   value={formData.serviceType}
                   onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
-                >
-                  {currentServices.map((srv, idx) => (
-                    <option key={idx} value={srv}>{srv}</option>
+                  placeholder="Choose or type your custom service..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                />
+                <datalist id="services-list">
+                  {currentSuggestions.map((srv, idx) => (
+                    <option key={idx} value={srv} />
                   ))}
-                </select>
+                </datalist>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Project Scope / Core Problem *</label>
+              <label htmlFor="quote-project-scope" className="block text-xs font-medium text-slate-200 mb-1">Project Scope / Requirements</label>
               <textarea
+                id="quote-project-scope"
                 rows={3}
-                required
                 value={formData.projectScope}
                 onChange={(e) => setFormData({ ...formData, projectScope: e.target.value })}
                 placeholder="Describe your business workflow, requirements, target deliverables..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
               />
             </div>
 

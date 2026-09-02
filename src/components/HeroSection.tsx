@@ -1,7 +1,6 @@
 'use client';
 
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
@@ -10,10 +9,7 @@ import {
   Layers, 
   ArrowRight, 
   Briefcase, 
-  GraduationCap, 
   MessageSquare,
-  ShieldCheck,
-  CheckCircle2,
   Building2
 } from "lucide-react";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -31,87 +27,74 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section className="relative min-h-[90vh] pt-32 pb-20 overflow-hidden flex items-center justify-center">
       {/* Background radial glows & grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0b1528_1px,transparent_1px),linear-gradient(to_bottom,#0b1528_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] radial-glow-gold pointer-events-none blur-3xl opacity-50" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] radial-glow-gold pointer-events-none blur-3xl opacity-40" />
       <div className="absolute top-1/3 right-10 w-[400px] h-[400px] radial-glow-cyan pointer-events-none blur-3xl opacity-30" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         {/* Top Badges */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-slate-900/80 border border-amber-500/30 text-xs sm:text-sm text-slate-200 mb-8 backdrop-blur-md shadow-lg shadow-amber-500/10"
+        <div
+          className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-amber-500/40 text-xs sm:text-sm text-slate-200 mb-8 backdrop-blur-md shadow-lg shadow-amber-500/10"
         >
           <span className="flex items-center gap-1.5 text-amber-300 font-semibold">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             Tirupati Intellect Authority
           </span>
-          <span className="text-slate-500">•</span>
-          <span className="text-slate-300">Teaching & All Business Solutions</span>
-          <span className="text-slate-500">•</span>
-          <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-mono">
+          <span className="text-slate-400">•</span>
+          <span className="text-slate-200 font-medium">Teaching & All Business Solutions</span>
+          <span className="text-slate-400">•</span>
+          <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[11px] font-mono font-medium">
             With AI / Without AI
           </span>
-        </motion.div>
+        </div>
 
         {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+        <h1
           className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.15]"
         >
           Empowering Tirupati with{" "}
           <span className="gold-gradient-text">World-Class AI</span> &{" "}
           <span className="cyan-gradient-text">Scalable Solutions</span>
-        </motion.h1>
+        </h1>
 
         {/* Subtitle with Founder & Scope Info */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-6 text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
+        <p
+          className="mt-6 text-base sm:text-xl text-slate-200 max-w-3xl mx-auto leading-relaxed"
         >
           Founded by <strong className="text-amber-300 font-semibold">M Bhargav Rayudu</strong>{" "}
-          <span className="text-slate-400 text-sm">
+          <span className="text-slate-300 text-sm">
             (Professional AI Certificate, B.Tech Mechatronics Engineering, CAD Diploma)
           </span>.
           We deliver transformative <span className="text-white font-medium">Teaching & Industry Training</span> alongside bespoke <span className="text-white font-medium">Business Solutions</span> for high-growth enterprises.
-        </motion.p>
+        </p>
 
         {/* Credentials Pill Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-8 flex flex-wrap justify-center items-center gap-3 text-xs sm:text-sm text-slate-300"
+        <div
+          className="mt-8 flex flex-wrap justify-center items-center gap-3 text-xs sm:text-sm text-slate-200"
         >
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-amber-500/20 backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/80 border border-amber-500/30 backdrop-blur-sm">
             <Cpu className="w-4 h-4 text-cyan-400" />
             <span>Professional AI Certified</span>
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-amber-500/20 backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/80 border border-amber-500/30 backdrop-blur-sm">
             <Cog className="w-4 h-4 text-amber-400" />
             <span>B.Tech Mechatronics Engineering</span>
           </div>
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/60 border border-amber-500/20 backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/80 border border-amber-500/30 backdrop-blur-sm">
             <Layers className="w-4 h-4 text-emerald-400" />
             <span>CAD Diploma Specialist</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
+        <div
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md sm:max-w-none mx-auto"
         >
           {/* Apply for Job Button */}
           <button
+            type="button"
             onClick={onOpenJobModal}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 text-black font-bold text-base hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 group"
+            aria-label="Apply for Job at TIA"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 text-black font-extrabold text-base hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 group"
           >
             <Briefcase className="w-5 h-5 text-black" />
             <span>Apply for Job (Attach Files)</span>
@@ -120,8 +103,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Request Business Solution */}
           <button
+            type="button"
             onClick={onOpenQuoteModal}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-slate-900/90 text-slate-100 font-semibold text-base border border-amber-500/40 hover:bg-slate-800 hover:border-amber-400 transition-all duration-200 shadow-xl"
+            aria-label="Request Business Solution"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-slate-900/90 text-slate-100 font-bold text-base border border-amber-500/40 hover:bg-slate-800 hover:border-amber-400 transition-all duration-200 shadow-xl"
           >
             <Building2 className="w-5 h-5 text-cyan-400" />
             <span>Request Business Solution</span>
@@ -129,38 +114,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* WhatsApp Direct P.A. Desk */}
           <button
+            type="button"
             onClick={() => openWhatsApp("Hello P.A. Laila, I would like to connect regarding TIA solutions and training.")}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-emerald-950/60 text-emerald-300 font-semibold text-base border border-emerald-500/40 hover:bg-emerald-900/60 hover:text-emerald-200 transition-all duration-200"
+            aria-label="WhatsApp P.A. Laila Desk"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-emerald-950/70 text-emerald-300 font-bold text-base border border-emerald-500/50 hover:bg-emerald-900/70 hover:text-emerald-200 transition-all duration-200 shadow-lg"
           >
             <MessageSquare className="w-5 h-5 text-emerald-400" />
             <span>WhatsApp P.A. Laila (+91 7386157041)</span>
           </button>
-        </motion.div>
+        </div>
 
         {/* Live Metrics Showcase */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+        <div
           className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
         >
-          <div className="glass-panel p-4 rounded-2xl border-amber-500/20 text-center">
+          <div className="glass-panel p-4 rounded-2xl border-amber-500/30 text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-amber-300 font-mono">100%</div>
-            <div className="text-xs sm:text-sm text-slate-400 mt-1">Multi-Domain AI & CAD</div>
+            <div className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">Multi-Domain AI & CAD</div>
           </div>
-          <div className="glass-panel p-4 rounded-2xl border-amber-500/20 text-center">
+          <div className="glass-panel p-4 rounded-2xl border-amber-500/30 text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-cyan-300 font-mono">Dual Wing</div>
-            <div className="text-xs sm:text-sm text-slate-400 mt-1">Teaching & Enterprise</div>
+            <div className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">Teaching & Enterprise</div>
           </div>
-          <div className="glass-panel p-4 rounded-2xl border-amber-500/20 text-center">
+          <div className="glass-panel p-4 rounded-2xl border-amber-500/30 text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-emerald-300 font-mono">Tirupati</div>
-            <div className="text-xs sm:text-sm text-slate-400 mt-1">Headquarters (A.P.)</div>
+            <div className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">Headquarters (A.P.)</div>
           </div>
-          <div className="glass-panel p-4 rounded-2xl border-amber-500/20 text-center">
+          <div className="glass-panel p-4 rounded-2xl border-amber-500/30 text-center">
             <div className="text-2xl sm:text-3xl font-extrabold text-amber-300 font-mono">P.A. Laila</div>
-            <div className="text-xs sm:text-sm text-slate-400 mt-1">WhatsApp Dedicated Desk</div>
+            <div className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">WhatsApp Dedicated Desk</div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

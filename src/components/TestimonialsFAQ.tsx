@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Sparkles, CheckCircle2 } from 'lucide-react';
-import { faqData } from '@/data/faq';
+import React, { useState } from "react";
+import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { faqData } from "@/data/faq";
 
 export const TestimonialsFAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -31,7 +31,10 @@ export const TestimonialsFAQ: React.FC = () => {
                 }`}
               >
                 <button
+                  type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-ans-${idx}`}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4"
                 >
                   <span className="font-bold text-white text-base sm:text-lg">
@@ -43,7 +46,7 @@ export const TestimonialsFAQ: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-slate-300 text-sm leading-relaxed border-t border-slate-800/60">
+                  <div id={`faq-ans-${idx}`} className="px-5 sm:px-6 pb-6 pt-1 text-slate-200 text-sm leading-relaxed border-t border-slate-800/60">
                     {item.answer}
                   </div>
                 )}

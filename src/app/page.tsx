@@ -1,26 +1,36 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { HeroSection } from '@/components/HeroSection';
-import { FounderSection } from '@/components/FounderSection';
-import { SolutionsSection } from '@/components/SolutionsSection';
-import { TeachingAcademy } from '@/components/TeachingAcademy';
-import { JobApplicationSection } from '@/components/JobApplicationSection';
-import { JobApplicationModal } from '@/components/JobApplicationModal';
-import { InstantQuoteModal } from '@/components/InstantQuoteModal';
-import { PALailaDesk } from '@/components/PALailaDesk';
-import { TestimonialsFAQ } from '@/components/TestimonialsFAQ';
-import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
-import { Footer } from '@/components/Footer';
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import { Navbar } from "@/components/Navbar";
+import { HeroSection } from "@/components/HeroSection";
+import { FounderSection } from "@/components/FounderSection";
+import { SolutionsSection } from "@/components/SolutionsSection";
+import { TeachingAcademy } from "@/components/TeachingAcademy";
+import { JobApplicationSection } from "@/components/JobApplicationSection";
+import { PALailaDesk } from "@/components/PALailaDesk";
+import { TestimonialsFAQ } from "@/components/TestimonialsFAQ";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { Footer } from "@/components/Footer";
+
+// Dynamically import heavy modals on demand for optimal PageSpeed performance
+const JobApplicationModal = dynamic(
+  () => import("@/components/JobApplicationModal").then((mod) => mod.JobApplicationModal),
+  { ssr: false }
+);
+
+const InstantQuoteModal = dynamic(
+  () => import("@/components/InstantQuoteModal").then((mod) => mod.InstantQuoteModal),
+  { ssr: false }
+);
 
 export default function HomePage() {
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
-  const [selectedCategory, setSelectedCategory] = useState<'with_ai' | 'without_ai' | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<"with_ai" | "without_ai" | undefined>(undefined);
 
-  const handleOpenQuoteModal = (service?: string, category?: 'with_ai' | 'without_ai') => {
+  const handleOpenQuoteModal = (service?: string, category?: "with_ai" | "without_ai") => {
     setSelectedService(service);
     setSelectedCategory(category);
     setIsQuoteModalOpen(true);
@@ -35,7 +45,7 @@ export default function HomePage() {
       />
 
       {/* Main Content Sections */}
-      <main>
+      <main id="main-content">
         {/* 1. Hero Section */}
         <HeroSection
           onOpenJobModal={() => setIsJobModalOpen(true)}
@@ -76,18 +86,22 @@ export default function HomePage() {
       {/* Floating WhatsApp Fast-Action Menu */}
       <FloatingWhatsApp />
 
-      {/* Global Interactive Modals */}
-      <JobApplicationModal
-        isOpen={isJobModalOpen}
-        onClose={() => setIsJobModalOpen(false)}
-      />
+      {/* Global Interactive Modals (Loaded on demand) */}
+      {isJobModalOpen && (
+        <JobApplicationModal
+          isOpen={isJobModalOpen}
+          onClose={() => setIsJobModalOpen(false)}
+        />
+      )}
 
-      <InstantQuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={() => setIsQuoteModalOpen(false)}
-        preselectedService={selectedService}
-        initialCategory={selectedCategory}
-      />
+      {isQuoteModalOpen && (
+        <InstantQuoteModal
+          isOpen={isQuoteModalOpen}
+          onClose={() => setIsQuoteModalOpen(false)}
+          preselectedService={selectedService}
+          initialCategory={selectedCategory}
+        />
+      )}
     </div>
   );
 }

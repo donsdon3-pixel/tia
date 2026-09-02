@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Briefcase, UploadCloud, FileText, CheckCircle2, AlertCircle, Send, Trash2, ShieldCheck, MessageSquare } from 'lucide-react';
-import { uploadResumeFile, submitJobApplication, JobApplicationData } from '@/lib/supabaseClient';
-import { generateJobApplicationWhatsAppMessage, openWhatsApp, WHATSAPP_NUMBER } from '@/lib/whatsapp';
-import confetti from 'canvas-confetti';
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { X, Briefcase, UploadCloud, FileText, CheckCircle2, AlertCircle, Send, Trash2 } from "lucide-react";
+import { uploadResumeFile, submitJobApplication, JobApplicationData } from "@/lib/supabaseClient";
+import { generateJobApplicationWhatsAppMessage, openWhatsApp } from "@/lib/whatsapp";
+import confetti from "canvas-confetti";
 
 interface JobApplicationModalProps {
   isOpen: boolean;
@@ -14,13 +14,13 @@ interface JobApplicationModalProps {
 
 export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState<JobApplicationData>({
-    fullName: '',
-    email: '',
-    phone: '',
-    position: 'AI Engineer & LLM Developer',
-    experienceLevel: '1 - 3 Years',
-    portfolioUrl: '',
-    coverNote: '',
+    fullName: "",
+    email: "",
+    phone: "",
+    position: "AI Engineer & LLM Developer",
+    experienceLevel: "1 - 3 Years",
+    portfolioUrl: "",
+    coverNote: "",
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -30,21 +30,23 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const positions = [
-    'AI Engineer & LLM Developer',
-    'Industrial CAD 3D Design Engineer',
-    'Mechatronics & Robotics Specialist',
-    'Business Solutions Consultant',
-    'Teaching Faculty / Instructor (AI & CAD)',
-    'Full Stack Web & Database Engineer',
-    'Graduate Trainee / Intern',
+  const suggestedPositions = [
+    "AI Engineer & LLM Developer",
+    "Cybersecurity & Threat Analyst",
+    "Cloud Computing & DevOps Engineer",
+    "Industrial CAD 3D Design Engineer",
+    "Mechatronics & Robotics Specialist",
+    "Business Solutions Consultant",
+    "Teaching Faculty / Instructor",
+    "Full Stack Web & Database Engineer",
+    "Graduate Trainee / Intern",
   ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       if (selectedFile.size > 15 * 1024 * 1024) {
-        setErrorMsg('File exceeds 15MB limit.');
+        setErrorMsg("File exceeds 15MB limit.");
         return;
       }
       setFile(selectedFile);
@@ -54,11 +56,6 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.email || !formData.phone) {
-      setErrorMsg('Please complete the required fields.');
-      return;
-    }
-
     setIsSubmitting(true);
     setErrorMsg(null);
     setUploadProgress(25);
@@ -74,6 +71,9 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
       setUploadProgress(75);
       await submitJobApplication({
         ...formData,
+        fullName: formData.fullName || "Candidate",
+        phone: formData.phone || "Provided on WhatsApp",
+        position: formData.position || "Applicant",
         resumeFileName: file ? file.name : undefined,
       }, resumeUrl);
 
@@ -85,13 +85,13 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
       } catch (c) {}
 
       const msg = generateJobApplicationWhatsAppMessage({
-        fullName: formData.fullName,
+        fullName: formData.fullName || "Applicant",
         email: formData.email,
-        phone: formData.phone,
-        position: formData.position,
+        phone: formData.phone || "Provided on WhatsApp",
+        position: formData.position || "General Application",
         experienceLevel: formData.experienceLevel,
         portfolioUrl: formData.portfolioUrl,
-        resumeFileName: file ? file.name : 'Document attached',
+        resumeFileName: file ? file.name : "Document attached",
         resumeUrl: resumeUrl,
         coverNote: formData.coverNote,
       });
@@ -100,7 +100,7 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
         openWhatsApp(msg);
       }, 800);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to submit.');
+      setErrorMsg(err.message || "Failed to submit.");
     } finally {
       setIsSubmitting(false);
     }
@@ -117,8 +117,10 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
         className="relative w-full max-w-2xl bg-[#070D1A] border border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl my-8"
       >
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+          aria-label="Close application modal"
+          className="absolute top-5 right-5 p-2 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -129,7 +131,7 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
           </div>
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-white">Apply for Position at TIA</h3>
-            <p className="text-xs text-slate-400">Direct dispatch to P.A. Laila (+91 7386157041)</p>
+            <p className="text-xs text-slate-300">Direct dispatch to P.A. Laila (+91 7386157041)</p>
           </div>
         </div>
 
@@ -144,8 +146,9 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
             </p>
             <div className="pt-4 flex justify-center gap-3">
               <button
+                type="button"
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-xl bg-amber-400 text-black font-bold text-xs"
+                className="px-6 py-2.5 rounded-xl bg-amber-400 text-black font-bold text-xs shadow-md"
               >
                 Done
               </button>
@@ -161,24 +164,24 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Full Name *</label>
+                <label htmlFor="modal-job-name" className="block text-xs font-medium text-slate-200 mb-1">Full Name</label>
                 <input
+                  id="modal-job-name"
                   type="text"
-                  required
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">WhatsApp Number *</label>
+                <label htmlFor="modal-job-phone" className="block text-xs font-medium text-slate-200 mb-1">WhatsApp Number</label>
                 <input
+                  id="modal-job-phone"
                   type="tel"
-                  required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="+91 9876543210"
                 />
               </div>
@@ -186,32 +189,37 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Email *</label>
+                <label htmlFor="modal-job-email" className="block text-xs font-medium text-slate-200 mb-1">Email</label>
                 <input
+                  id="modal-job-email"
                   type="email"
-                  required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
                   placeholder="email@example.com"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Position *</label>
-                <select
+                <label htmlFor="modal-job-pos" className="block text-xs font-medium text-slate-200 mb-1">Position (Select or Type Custom)</label>
+                <input
+                  id="modal-job-pos"
+                  list="modal-positions-list"
+                  type="text"
                   value={formData.position}
                   onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
-                >
-                  {positions.map((p, i) => (
-                    <option key={i} value={p}>{p}</option>
+                  placeholder="Select or type your role..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                />
+                <datalist id="modal-positions-list">
+                  {suggestedPositions.map((p, i) => (
+                    <option key={i} value={p} />
                   ))}
-                </select>
+                </datalist>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Attach Resume / Portfolio (PDF/DOC/ZIP)</label>
+              <label className="block text-xs font-medium text-slate-200 mb-1">Attach Resume / Portfolio (PDF/DOC/ZIP)</label>
               <div
                 onClick={() => fileInputRef.current?.click()}
                 className="p-4 rounded-xl border border-dashed border-slate-700 hover:border-amber-500 text-center cursor-pointer bg-slate-900/60 transition-colors"
@@ -229,7 +237,7 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
                     <Trash2 className="w-4 h-4 text-red-400 hover:scale-110" onClick={(e) => { e.stopPropagation(); setFile(null); }} />
                   </div>
                 ) : (
-                  <div className="text-xs text-slate-400 flex items-center justify-center gap-2">
+                  <div className="text-xs text-slate-300 flex items-center justify-center gap-2 font-medium">
                     <UploadCloud className="w-4 h-4 text-amber-400" />
                     <span>Click to browse and attach file</span>
                   </div>
@@ -238,20 +246,21 @@ export const JobApplicationModal: React.FC<JobApplicationModalProps> = ({ isOpen
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Cover Note</label>
+              <label htmlFor="modal-job-note" className="block text-xs font-medium text-slate-200 mb-1">Cover Note</label>
               <textarea
+                id="modal-job-note"
                 rows={2}
                 value={formData.coverNote}
                 onChange={(e) => setFormData({ ...formData, coverNote: e.target.value })}
                 placeholder="Briefly state your core skills..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs outline-none focus:border-amber-400"
               />
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold text-sm hover:brightness-110 flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 disabled:opacity-50"
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold text-sm hover:brightness-110 flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 disabled:opacity-50"
             >
               {isSubmitting ? "Sending..." : "Submit Application & Open WhatsApp"}
             </button>

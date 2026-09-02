@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Cpu, Cog, Layers, Award, CheckCircle2, MessageSquare, ShieldCheck, MapPin, Sparkles } from "lucide-react";
+import { Cpu, Cog, Layers, Award, MessageSquare, MapPin, Sparkles } from "lucide-react";
 import { founderData } from "@/data/founder";
 import { openWhatsApp } from "@/lib/whatsapp";
 
@@ -17,7 +16,7 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
   onOpenJobModal,
 }) => {
   return (
-    <section id="founder" className="py-24 relative overflow-hidden bg-[#030712]/80">
+    <section id="founder" className="py-24 relative overflow-hidden bg-[#030712]/90">
       <div className="absolute top-1/2 left-0 w-96 h-96 radial-glow-gold pointer-events-none blur-3xl opacity-20" />
       <div className="absolute bottom-10 right-0 w-96 h-96 radial-glow-cyan pointer-events-none blur-3xl opacity-20" />
 
@@ -38,23 +37,24 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
 
         {/* Founder Showcase Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Founder Photo & Bio Card */}
+          {/* Left Column: Founder Photo (Fixed for Full Half-Body Visibility) */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden glass-panel border-amber-500/30 p-4 shadow-2xl group">
-              {/* Photo Container */}
-              <div className="relative w-full h-[460px] sm:h-[500px] rounded-2xl overflow-hidden bg-slate-900 border border-amber-500/20">
+            <div className="relative rounded-3xl overflow-hidden glass-panel border-amber-500/30 p-3 sm:p-4 shadow-2xl group bg-[#070D1A]">
+              {/* Photo Container showing complete half body */}
+              <div className="relative w-full h-[520px] sm:h-[580px] rounded-2xl overflow-hidden bg-[#0A1220] border border-amber-500/30 flex items-center justify-center">
                 <Image
                   src="/images/founder-bhargav.jpg"
                   alt="M Bhargav Rayudu - Founder & CEO of TIA"
                   fill
-                  className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 1024px) 100vw, 450px"
+                  className="object-contain object-top group-hover:scale-[1.02] transition-transform duration-500"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#040914] via-[#040914]/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#040914] via-[#040914]/60 to-transparent pointer-events-none" />
                 
-                {/* Overlay Badge on Image */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-slate-950/90 backdrop-blur-md border border-amber-500/40">
-                  <div className="text-white font-bold text-lg flex items-center justify-between">
+                {/* Overlay Badge at the base */}
+                <div className="absolute bottom-3 left-3 right-3 p-3.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-amber-500/40">
+                  <div className="text-white font-bold text-base sm:text-lg flex items-center justify-between">
                     <span>{founderData.name}</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
                       Founder & CEO
@@ -63,7 +63,7 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                   <div className="text-xs text-amber-300 font-medium mt-0.5">
                     Tirupati Intellect Authority (TIA)
                   </div>
-                  <div className="text-xs text-slate-400 flex items-center gap-1.5 mt-2">
+                  <div className="text-xs text-slate-300 flex items-center gap-1.5 mt-1.5">
                     <MapPin className="w-3.5 h-3.5 text-amber-400" />
                     <span>Tirupati, Andhra Pradesh, India</span>
                   </div>
@@ -71,14 +71,16 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
               </div>
 
               {/* P.A. Laila Direct WhatsApp Contact Box */}
-              <div className="mt-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+              <div className="mt-3 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
                 <div>
-                  <div className="text-xs text-slate-400">Official Communication Desk</div>
+                  <div className="text-xs text-slate-300">Official Communication Desk</div>
                   <div className="text-sm font-semibold text-white">Handled by P.A. Laila</div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => openWhatsApp("Hello P.A. Laila, I would like to schedule a discussion / meeting with Founder M Bhargav Rayudu.")}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 text-black font-bold text-xs hover:bg-amber-300 transition-colors"
+                  aria-label="WhatsApp Founder Desk"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-400 text-black font-bold text-xs hover:bg-amber-300 transition-colors shadow-md"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>WhatsApp Desk</span>
@@ -87,9 +89,9 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Qualifications, Vision & Dual Mastery */}
+          {/* Right Column: Qualifications, Vision & Mastery */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="space-y-4">
+            <div className="space-y-3">
               <h3 className="text-2xl sm:text-3xl font-bold text-white">
                 Triple-Engine Engineering & AI Mastery
               </h3>
@@ -136,19 +138,21 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                 "{founderData.mission}"
               </p>
               <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-300">
                   Ready to collaborate with TIA?
                 </span>
                 <div className="flex items-center gap-2">
                   <button
+                    type="button"
                     onClick={onOpenQuoteModal}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-500/40 hover:bg-amber-400/30"
+                    className="text-xs font-semibold px-3.5 py-2 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-500/40 hover:bg-amber-400/30 transition-colors"
                   >
                     Request Business Solution
                   </button>
                   <button
+                    type="button"
                     onClick={onOpenJobModal}
-                    className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:text-white"
+                    className="text-xs font-semibold px-3.5 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:text-white transition-colors"
                   >
                     Apply for Position
                   </button>
