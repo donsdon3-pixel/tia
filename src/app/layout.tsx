@@ -63,6 +63,12 @@ export default function RootLayout({
 `,
           }}
         />
+        {/* Event snippet for Phone call lead conversion page */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `gtag('event', 'conversion', {'send_to': 'AW-18539678317/2IokCIndgLAdEO2UtIhF'});`,
+          }}
+        />
         {/* Google Tag Manager */}
         <script
           dangerouslySetInnerHTML={{

@@ -8,7 +8,16 @@ export function formatWhatsAppUrl(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
 }
 
+export function triggerPhoneLeadConversion(): void {
+  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "conversion", {
+      send_to: "AW-18539678317/2IokCIndgLAdEO2UtIhF",
+    });
+  }
+}
+
 export function openWhatsApp(message: string): void {
+  triggerPhoneLeadConversion();
   const url = formatWhatsAppUrl(message);
   if (typeof window !== "undefined") {
     window.open(url, "_blank", "noopener,noreferrer");
